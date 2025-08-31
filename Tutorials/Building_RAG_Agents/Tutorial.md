@@ -24,17 +24,17 @@ Before starting, ensure you have:
 
     Or 
 
-    2. Install directly the necessary requirements given below
+    2. Directly install the requirements given below
 
-### Docker setup (Recommended for quick and hassle free setup)
+### Docker setup (Recommended for quick and hassle-free setup)
 
-Download the Dockerfile and docker-compose.yml files from this tuorial and place your downloaded encryption file SpiLLI.pem in the same directory as these downloaded files.
+Download the Dockerfile and docker-compose.yml files from this tutorial and place your downloaded encryption file SpiLLI.pem in the same directory as these downloaded files.
 
-Then, build and run the docker image using 
+Then, build and run the Docker image using 
 ```
 docker compose up -d
 ```
-This will install the necessary software and run the docker image that you can use for this tutorial. If you want to understand what the docker image installs, or if you want to install all the components manually, you can follow the Direct setup below.
+This will install the necessary software and run the Docker image that you can use for this tutorial. If you want to understand what the Docker image installs, or if you want to install all the components manually, you can follow the Direct setup below.
 
 ### Direct setup
 
