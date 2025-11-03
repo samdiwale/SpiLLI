@@ -6,7 +6,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Update system and install required packages
 RUN apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
         build-essential \
         curl \
@@ -16,7 +15,7 @@ RUN apt-get update && \
         python3-pip \
         software-properties-common \
         wget \
-        zip jq unzip xvfb
+        zip jq unzip xvfb dos2unix
 
 # Create working directory
 WORKDIR /app
@@ -58,6 +57,7 @@ RUN ldconfig
 
 # Copy entrypoint script for Jupyter setup
 COPY entrypoint.sh ./
+RUN dos2unix ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
 # Expose ports 8080 and 8888 (Jupyter)
