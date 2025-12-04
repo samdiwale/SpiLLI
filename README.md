@@ -1,133 +1,171 @@
-# SpiLLI
+# SpiLLI  
+*Decentralized AI inference infrastructure*  
+
+
 SpiLLI provides infrastructure to manage, host, deploy and run decentralized AI inference
 
-SpiLLI infrastructure comprises of two components: 1. SpiLLI SDK (a library / framework to write decentralized AI applications) and 2. SpiLLIHost (a host software allowing decentralized nodes to execute and connect AI models to peer nodes)
+SpiLLI consists of two main components:
 
-**Note SpiLLI is currently in beta testing and comes with no warranties, can have bugs and we appreciate you helping us iron out all its flaws with feedback and suggestions in the Issues and Discussions tabs in this repository**
+| Component | Purpose |
+|-----------|---------|
+| **SpiLLI SDK** | Python library/framework for building decentralized AI applications |
+| **SpiLLIHost** | Sandboxed AI Runner that turns a machine into a host node, serving AI models to the network |
 
-# System requirements
+> **⚠️ Notice** – SpiLLI is in **beta**. It may contain bugs and features under development.  
+> Kindly open issues, give feedback, or contribute on GitHub.
 
-We currently support Ubuntu 24.04 and Windows 10/11 operating systems for **SpiLLIHost** (host nodes for AI models). SpiLLIHost currently requires a NVidia GPU (with its driver installed) to run the AI models. Support for other OS and GPU/CPU variants will be coming soon.
+---
 
-SpiLLI SDK currently provides an interface to python 3.12 (support for other python versions and languages coming soon).
+## How SpiLLI Works  
 
-# Installation
+SpiLLI is a global, peer‑to‑peer network of AI hosts and users.  
+* A machine running **SpiLLIHost** becomes a *host node*.  
+* Apps built with **SpiLLI SDK** can discover and use models on any host node.  
+* Connections are made without a central cloud provider.
 
-## SpiLLIHost
+The network is built around three principles:
 
-You can download and install SpiLLIHost for Ubuntu and Windows on computers with a NVidia GPU by downloading the corresponding installers from our current mirrors on SourceForge using the buttons / links below:
+1. **Dynamic Resource Allocation** – Apps find the best host based on load, performance, and proximity.  
+2. **Decentralized Infrastructure** – Computing power is spread across many nodes, providing redundancy.  
+3. **Real‑time Adaptation** – Connections and allocations are continuously optimized.
 
-## For Ubuntu:
+This reduces costs and increases accessibility for developers, users and AI researchers.
 
-Download button  => 
-<a href="https://sourceforge.net/projects/spilli/files/V0.2.7/SpiLLIHost-0.2.7-Linux-SpiLLIHost.deb/download" target="_blank">
-  <img src="https://a.fsdn.com/con/app/sf-download-button" alt="Download SpiLLIHost"/>
-</a>
+---
 
-Link: https://sourceforge.net/projects/spilli/files/V0.2.7/SpiLLIHost-0.2.7-Linux-SpiLLIHost.deb/download
+## Getting Started
 
-After the installer (.deb file) is downloaded, to install SpiLLIHost on ubuntu, open a terminal in the directory containing the downloaded file and install using Ubuntu's "apt" package manager
+### 1️⃣ Running Applications and Tutorials in a pre-configured, sandboxed environment
 
-```
-sudo apt install ./SpiLLIHost-0.2.7-Linux-SpiLLIHost.deb
-```
+The repository ships a Docker image with all required dependencies installed for easy startup. If you have Docker installed, you can run the tutorials using the following steps:
 
-SpiLLIHost uses a personalized encryption key given by a personalized SpiLLIHost.pem. Your host node cannot function without this key. To make the host usable, download the SpiLLIHost Encryption file from https://agents.syanptrix.org/dechat (Click on the download SpiLLIHost button on the page and click on the "Download Host Encryption" button). 
+| Step | Command |
+|------|---------|
+| Clone the repo | `git clone https://github.com/synaptrixai/SpiLLI.git` |
+| Download your PEM encryption | Download a personalized encryption file from [SpiLLI Demo](https://agents.synaptrix.org/dechat) Put the downloaded `.pem` file next to the `docker-compose.yml` file in the cloned repository |
+| Start Docker | `docker compose up` |
+| Access Jupyter | Open <http://127.0.0.1:8888/lab> to access and run the tutorials |
 
-```
-sudo mv ./SpiLLIHost.pem /usr/bin/SpiLLIHost/
-```
+**Sample tutorials**
 
-With the encryption file now placed in /usr/bin/SpiLLIHost/ your host node becomes functional. The encryption key is used to secure communication between the host and peer nodes, and also is used to keep track of usage of host nodes on the network to allow host nodes to be compensated with credits in the future (more on this later below).
+| Tutorial | Link |
+|----------|------|
+| Building RAG agents | <http://127.0.0.1:8888/lab/tree/Tutorials/Building_RAG_Agents/scripts/Tutorial.ipynb> |
+| Building Tools for AI agents | <http://127.0.0.1:8888/lab/tree/Tutorials/Building_Agent_Tools/Tutorial.ipynb> |
 
-## For Windows:
+> **Tip** – The `Tutorials` folder is volume‑mapped into the container.  
+> Edit or add notebooks on your host; changes appear instantly inside Jupyter and vise-versa.
 
-Download button => 
-<a href="https://sourceforge.net/projects/spilli/files/V0.2.7/SpiLLIHost-0.2.7-win64.exe/download" target="_blank">
-  <img src="https://a.fsdn.com/con/app/sf-download-button" alt="Download SpiLLIHost"/>
-</a>
+> **Contributing** – Create a branch, commit your notebooks, and open a PR (Pull Request).  
+> Discuss major changes in the *Discussions* or *Ideas* tab first.
 
-Link: https://sourceforge.net/projects/spilli/files/V0.2.7/SpiLLIHost-0.2.7-win64.exe/download
+---
 
-To install, double click on the installer to run the setup. (The installer is not currently verfied with a windows signature and windows will warn you about this. You can ignore the warning and proceed with running the setup. This is not indicative of any malware, just requires us to register the installer with a digital signature. The fix for this will be coming soon).
+### 2️⃣ System Requirements
 
-## SpiLLI SDK
+| OS | Host | SDK |
+|----|------|-----|
+| Ubuntu 24.04 | ✅ | Python 3.8–3.12 |
+| Windows 10/11 | ✅ | Python 3.8–3.12 |
+| Others | 🚧 (future) | 🚧 |
 
-If you have python 3.12 and pip installed you can install the SDK simply by running
+> **Host**: Supports NVIDIA, AMD GPUs and CPUs.  
+> **SDK**: Use the Python package manager to install the SDK.
 
-```
+---
+
+### 3️⃣ Installation Without Docker
+
+#### Installing SpiLLIHost
+
+- **Ubuntu**  
+  1. Download the `.deb`: <https://sourceforge.net/projects/spilli/files/v0.3.1/SpiLLIHost-0.3.1-Linux-SpiLLIHost.deb/download>  
+  2. Install:  
+     ```bash
+     sudo apt install ./SpiLLIHost-0.3.1-Linux-SpiLLIHost.deb
+     ```  
+  3. Move the PEM file to the host directory:  
+     ```bash
+     sudo mv SpiLLIHost_Community.pem /usr/bin/SpiLLIHost/
+     ```  
+
+- **Windows**  
+  1. Download the installer: <https://sourceforge.net/projects/spilli/files/v0.3.1/SpiLLIHost-0.3.1-win64.exe/download>  
+  2. Run the setup. Ignore the unsigned‑signature warning.  
+  3. Select your `SpiLLIHost_Community.pem` during the installation process and follow prompts to complete the installation.
+
+After the installation is complete, SpiLLIHost is automatically started as a service on windows/ubuntu and nothing further needs to be done.
+
+To manage the **Service**  
+   - **Windows**: Use the Windows *Services* console [can be found by typing "Services" in the windows start search bar]. Double click the 
+   SpiLLIHost service in the Windows Services UI to open a dialog to start/stop/restart/or check the service status.  
+   - **Ubuntu**: Use systemctl in the terminal as admin. `sudo systemctl start [ other options: stop/restart/status] SpiLLIHost.service`.  
+
+> **Troubleshooting** The SpiLLIHost service will not run if there is no encryption file provided. If the service fails to start check if your downloaded pem file is stored in the installed directory ("/usr/bin/SpiLLI" for Ubuntu, "C:\Program Files (x86)\SpiLLIHost\bin" by default on Windows). The pem file should be named as  SpiLLIHost_Community.pem
+
+> **⚠️ Security** The pem file you download provides personalized client and host side encryption ensuring that the data in transit over the network is only accessible by you. So do not share the file publicly or commit it to the repository.
+
+#### Installing SpiLLI SDK
+
+Use the python pip installer in the terminal using
+```bash
 pip install --index-url https://well.synaptrix.org --upgrade SpiLLI
 ```
 
-If you need to install python, you can follow any of the guides on the internet for your operating system. Just make sure that you are installing python version 3.12 as this is the only one currently supported (support for other versions coming soon).
+> Get the `SpiLLIHost_Community.pem` and `SpiLLI_Community.pem` encryption files from <https://agents.synaptrix.org/dechat>.
 
-The SpiLLI SDK also uses a SpiLLI.pem encryption file similar to the one used for SpiLLIHost above and can be downloaded from  https://agents.synaptrix.org/dechat by clicking the download SpiLLI SDK button and then click download SDK encryption.
+---
 
-## How does SpiLLI work?
+## How to Use 
 
-SpiLLI is a decentralized network of AI hosts and AI users. When you download and install SpiLLIHost on a computer, the computer becomes a host node on the network. Other computers (not excluding the host computer) can run applications built with SpiLLI SDK that can use AI models hosted on any of the host nodes in the network. 
+| Role | What to do |
+|------|------------|
+| **AI Host** | Install SpiLLIHost, join the network, manage hosted models via the UI at <https://agents.synaptrix.org/dechat>. |
+| **Developer** | Build apps using the SDK. Get featured in  the repo by contributing tutorials, example applications and submit PRs. |
+| **Feedback** | Open issues, suggest features, share ideas using the corresponding tabs on [GitHub](https://github.com/synaptrixai/SpiLLI). |
+| **Sponsor** | Contact us to organize events like hackathons or AI agent tutorials for your community at `community@synaptrix.org`. |
 
-SpiLLI allows applications to connect directly to the best available computing resources, without relying on centralized cloud providers.
+> Star the repo if you like what we’re building!  
 
-The network works through **three key principles**:
+---
 
-1. **Dynamic Resource Allocation**: Applications automatically discover and connect to the best available hosts based on current demand, performance, and proximity
+## Running as an AI Host
 
-2. **Decentralized Infrastructure**: Computing resources are distributed across a global network of participating hosts, creating redundancy and fault tolerance
+1. **Installation** – Follow the instructions above.  
+2. **Service Management**  
+   - **Windows**: Use the *Services* console.  
+   - **Ubuntu**: `systemctl start spilli-host.service` / `stop`.  
+3. **Hosting Models**  
+   - Via the portal: <https://agents.synaptrix.org/dechat> → *Manage Hosted Models*.  
+   - Or drop `.gguf` files into the host directory (`/usr/bin/SpiLLIHost/Models` on Ubuntu, `C:\Program Files (x86)\SpiLLIHost\bin\Models` on Windows).
 
-3. **Real-time Adaptation**: The network continuously optimizes connections and resource allocation as conditions change, ensuring optimal performance
+---
 
-This approach reduces costs for developers while making it easier for anyone to contribute computing resources to power AI applications.
+## Running as an AI Developer
 
-The approach makes AI development more affordable and accessible, enabling anyone to contribute computing resources and developers to rely on a robust, decentralized network instead of centralized cloud services.
+* Explore the **Tutorials** folder for example code.  
+* Follow us on [LinkedIn](https://www.linkedin.com/company/synaptrix-ai) and watch the repo for updates.  
+* Feature your projects by contacting `community@synaptrix.org` or opening a PR.
 
-## How can you contribute?
+---
 
-### 1. 🚀 Become an AI Host
-- Download **SpiLLIHost** and join our network to host AI models for the community.
-- Currently in beta testing, earn tokens (no monetary value) while hosting resources.
-- Early hosts will be recognized as champions and supporters of the project.
+## Running as an AI User
 
-### 2. 💻 Develop Decentralized AI Apps
-- Build innovative apps using our getting started guides and tutorials available in the Wiki.
-- Connect your apps to our community network of hosts for global access without high costs.
-- Share your ideas, examples, and projects with the community to get featured!
+* Use the **Agents Portal**: <https://agents.synaptrix.org/dechat>.  
+* Import your `.p12` encryption file to interact securely (instructions on the portal).  
+* The portal prompts you to select the file once you start interacting.
 
-### 3. 💡 Give Feedback & Ideas
-- Let us know if your run into any issues or suggest features.
-- Share testimonials about how SpiLLI is helpful for you or your team.
-- Don’t forget to star this repository if you like what we’re building! 👍
+---
 
-### 4. 🏆 Become a Sponsor
-- Support our mission by sponsoring community events, hackathons, or development efforts.
-- Get featured as a supporter in our repository and community resources.
-- Contact us at [community@synaptrix.org](mailto:community@synaptrix.org) to learn more about sponsorship opportunities.
+## FAQ
 
+| Question | Answer |
+|----------|--------|
+| *Is my data safe?* | All traffic is encrypted with your personal PEM/P12 key. |
+| *What if I need a different OS?* | We’re working on macOS and other Linux distros. In the meantime you can use the Docker image to run on different OSes |
+| *Can I host models on a phone?* | The SDK runs on any machine with Python 3.8–3.12, but SpiLLIHost currently targets desktop OSes. In principle, yes, but we will postpone our phone hosting efforts unless you have a specific use case you'd like us to support |
 
-# Getting Started
+---
 
-## As an AI Host
-
-### Installation
-Download and install the SpiLLIHost app from the button above. The installation will automatically set up a host service on your computer.
-
-### Managing Services
-- **Windows:** Control the start/stop of the host service through Services settings.
-- **Ubuntu:** Use `systemctl` commands to manage the service.
-
-The host service typically runs by default after installation.
-
-### Hosting Models
-1. Visit [Agents Portal](https://agents.synaptrix.org/dechat/) and use the "Manage Hosted Models" button to:
-   - View your host nodes
-   - Add/remove models
-2. Alternatively, you can directly place a `.gguf` model files in the `Models` directory located at:
-   - **Ubuntu:** `/usr/bin/SpiLLIHost`
-   - **Windows:** `C:/Program Files (x86)/SpiLLIHost`
-
-## As an AI Developer
-Explore our [Tutorials](Tutorials) folder for example applications and ideas to help you develop your own projects. You can add this repository to your watch list or follow us on [LinkedIn](https://www.linkedin.com/company/synaptrix-ai). We will regularly update you via the Discussions section in the repository and via posts on LinkedIn on new tutorials, implementations and capability updates as the project advances. We will also be happy to feature your projects and ideas built using SpiLLI on these pages, just contact us with a draft on community@synaptrix.org or send us a pull request on this repository. 
-
-## As a General AI User
-
-You can explore AI models and chat with models on the decentralized network using the [Agents Portal](https://agents.synaptrix.org/dechat/). Note you'll need to setup your encryption by importing a .p12 encryption file to interact with the models on the Agents Portal. The encryption protects your data over the network such that only you have access to your data. The steps to getting and importing the encryption file to your browser are shown in the Getting Started section on the Agents Portal. Your browser will prompt you to select the encryption file to use when interactive with the portal after it has been setup. 
+**Thank you for using SpiLLI!**  
+For questions or help, reach out via the GitHub issues or Discussions tab (on the GitHub repo page).
