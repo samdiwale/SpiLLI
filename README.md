@@ -11,8 +11,7 @@ SpiLLI consists of two main components:
 | **SpiLLI SDK** | Python library/framework for building decentralized AI applications |
 | **SpiLLIHost** | Sandboxed AI Runner that turns a machine into a host node, serving AI models to the network |
 
-> **⚠️ Notice** – SpiLLI is in **beta**. It may contain bugs and features under development.  
-> Kindly open issues, give feedback, or contribute on GitHub.
+Computers running SpiLLIHost provide a collection of decentralized host nodes across the internet hosting AI models. Users and developers are automatically connected to the best available host at runtime for applications built with SpiLLI SDK for their requested AI resources.
 
 ---
 
@@ -35,15 +34,21 @@ This reduces costs and increases accessibility for developers, users and AI rese
 
 ## Getting Started
 
+There are two ways to getting started with SpiLLI.
+
+1. If you a first time user just looking to try out building some AI agents with the SDK, or follow the tutorials in this repository, follow instructions in the first "Running Applications and Tutorials in a pre-configured, sandboxed environment" section
+
+2. If you are looking to host AI models for yourself, or are a developer looking to install SpiLLI SDK directly (without all the heavy dependencies installed in the preshipped docker image for the tutorials), follow the second set of instructions: "Installation Without Docker" for a light weight install.
+
 ### 1️⃣ Running Applications and Tutorials in a pre-configured, sandboxed environment
 
-The repository ships a Docker image with all required dependencies installed for easy startup. If you have Docker installed, you can run the tutorials using the following steps:
+The repository ships a [Docker image](https://hub.docker.com/r/synaptrixai/spilli-rag-tutorials) with all required dependencies installed for easy startup. If you have [Docker](https://docs.docker.com/get-started/introduction/get-docker-desktop/) installed, you can run the tutorials using the following steps:
 
 | Step | Command |
 |------|---------|
 | Clone the repo | `git clone https://github.com/synaptrixai/SpiLLI.git` |
 | Download your PEM encryption | Download a personalized encryption file from [SpiLLI Demo](https://agents.synaptrix.org/dechat) Put the downloaded `.pem` file next to the `docker-compose.yml` file in the cloned repository |
-| Start Docker | `docker compose up` |
+| Start Docker | `docker compose up` (or sometimes `docker-compose up` on windows) |
 | Access Jupyter | Open <http://127.0.0.1:8888/lab> to access and run the tutorials |
 
 **Sample tutorials**
@@ -61,28 +66,15 @@ The repository ships a Docker image with all required dependencies installed for
 
 ---
 
-### 2️⃣ System Requirements
-
-| OS | Host | SDK |
-|----|------|-----|
-| Ubuntu 24.04 | ✅ | Python 3.8–3.12 |
-| Windows 10/11 | ✅ | Python 3.8–3.12 |
-| Others | 🚧 (future) | 🚧 |
-
-> **Host**: Supports NVIDIA, AMD GPUs and CPUs.  
-> **SDK**: Use the Python package manager to install the SDK.
-
----
-
-### 3️⃣ Installation Without Docker
+### 2️⃣ Installation Without Docker
 
 #### Installing SpiLLIHost
 
 - **Ubuntu**  
-  1. Download the `.deb`: <https://sourceforge.net/projects/spilli/files/v0.3.1/SpiLLIHost-0.3.1-Linux-SpiLLIHost.deb/download>  
+  1. Download the `.deb`: <https://github.com/synaptrixai/SpiLLI/releases/download/v0.3.4/SpiLLIHost-0.3.4-Linux-SpiLLIHost.deb>
   2. Install:  
      ```bash
-     sudo apt install ./SpiLLIHost-0.3.1-Linux-SpiLLIHost.deb
+     sudo apt install ./SpiLLIHost-0.3.4-Linux-SpiLLIHost.deb
      ```  
   3. Move the PEM file to the host directory:  
      ```bash
@@ -90,7 +82,7 @@ The repository ships a Docker image with all required dependencies installed for
      ```  
 
 - **Windows**  
-  1. Download the installer: <https://sourceforge.net/projects/spilli/files/v0.3.1/SpiLLIHost-0.3.1-win64.exe/download>  
+  1. Download the installer: <https://github.com/synaptrixai/SpiLLI/releases/download/v0.3.4/SpiLLIHost-0.3.4-win64.exe>  
   2. Run the setup. Ignore the unsigned‑signature warning.  
   3. Select your `SpiLLIHost_Community.pem` during the installation process and follow prompts to complete the installation.
 
@@ -101,7 +93,7 @@ To manage the **Service**
    SpiLLIHost service in the Windows Services UI to open a dialog to start/stop/restart/or check the service status.  
    - **Ubuntu**: Use systemctl in the terminal as admin. `sudo systemctl start [ other options: stop/restart/status] SpiLLIHost.service`.  
 
-> **Troubleshooting** The SpiLLIHost service will not run if there is no encryption file provided. If the service fails to start check if your downloaded pem file is stored in the installed directory ("/usr/bin/SpiLLI" for Ubuntu, "C:\Program Files (x86)\SpiLLIHost\bin" by default on Windows). The pem file should be named as  SpiLLIHost_Community.pem
+> **Troubleshooting** The SpiLLIHost service will not run if there is no encryption file provided. If the service fails to start check if your downloaded pem file is stored in the installed directory ("/usr/bin/SpiLLIHost" for Ubuntu, "C:\Program Files (x86)\SpiLLIHost\bin" by default on Windows). The pem file should be named as  SpiLLIHost_Community.pem
 
 > **⚠️ Security** The pem file you download provides personalized client and host side encryption ensuring that the data in transit over the network is only accessible by you. So do not share the file publicly or commit it to the repository.
 
@@ -113,6 +105,19 @@ pip install --index-url https://well.synaptrix.org --upgrade SpiLLI
 ```
 
 > Get the `SpiLLIHost_Community.pem` and `SpiLLI_Community.pem` encryption files from <https://agents.synaptrix.org/dechat>.
+
+---
+
+### 3️⃣ System Requirements
+
+| OS | Host | SDK |
+|----|------|-----|
+| Ubuntu 24.04 | ✅ | Python 3.8–3.12 |
+| Windows 10/11 | ✅ | Python 3.8–3.12 |
+| Others | 🚧 (future) | 🚧 |
+
+> **Host**: Supports NVIDIA, AMD GPUs and CPUs.  
+> **SDK**: Use the Python package manager to install the SDK.
 
 ---
 
@@ -152,8 +157,8 @@ pip install --index-url https://well.synaptrix.org --upgrade SpiLLI
 ## Running as an AI User
 
 * Use the **Agents Portal**: <https://agents.synaptrix.org/dechat>.  
-* Import your `.p12` encryption file to interact securely (instructions on the portal).  
-* The portal prompts you to select the file once you start interacting.
+* Import your `.p12` encryption file to interact securely ("Getting Started" instructions on the portal).  
+* The portal prompts you to select the encryption file once you start interacting to secure your AI pipeline.
 
 ---
 
@@ -166,6 +171,9 @@ pip install --index-url https://well.synaptrix.org --upgrade SpiLLI
 | *Can I host models on a phone?* | The SDK runs on any machine with Python 3.8–3.12, but SpiLLIHost currently targets desktop OSes. In principle, yes, but we will postpone our phone hosting efforts unless you have a specific use case you'd like us to support |
 
 ---
+
+> **⚠️ Notice** – SpiLLI is in **beta**. It may contain bugs and features under development.  
+> Kindly open issues, give feedback, or contribute on GitHub.
 
 **Thank you for using SpiLLI!**  
 For questions or help, reach out via the GitHub issues or Discussions tab (on the GitHub repo page).
